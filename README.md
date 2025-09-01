@@ -36,7 +36,7 @@
   <a href="https://trendshift.io/repositories/13979" target="_blank"><img src="https://trendshift.io/api/badge/repositories/13979" alt="plait-board%2Fdrawnix | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 </div>
 
-[*English README*](https://github.com/plait-board/drawnix/blob/develop/README_en.md)
+[*English README*](https://github.com/SplashCodeDex/VisualNoteX/blob/develop/README_en.md)
 
 ## 特性
 
@@ -77,9 +77,9 @@ Drawnix 是插件架构，与前面说到开源工具比技术架构更复杂一
 ## 仓储结构
 
 ```
-drawnix/
+VisualNoteX/
 ├── apps/
-│   ├── web                   # drawnix.com
+│   ├── web                   # visualnotex.com
 │   │    └── index.html       # HTML
 ├── dist/                     # 构建产物
 ├── packages/
@@ -142,4 +142,4 @@ docker pull pubuzhixing/drawnix:latest
 
 ## License
 
-[MIT License](https://github.com/plait-board/drawnix/blob/master/LICENSE)  
+[MIT License](https://github.com/SplashCodeDex/VisualNoteX/blob/master/LICENSE)

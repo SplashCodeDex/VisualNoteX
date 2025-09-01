@@ -1,9 +1,9 @@
 {
-  "name": "drawnix",
+  "name": "visualnotex",
   "version": "1.0.0",
   "license": "Proprietary",
   "author": "CodeDeX",
-  "description": "Professional drawing and whiteboarding application",
+  "description": "CodeDeX VisualNoteX - Professional drawing and whiteboarding application",
   "scripts": {
     "start": "nx serve web --host=0.0.0.0",
     "build": "nx run-many -t=build",

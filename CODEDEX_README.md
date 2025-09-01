@@ -78,7 +78,7 @@ npm run tauri:build
 
 Built with ❤️ by CodeDeX
 - **Email**: code@codeDeX.dev
-- **GitHub**: https://github.com/codeDeX/visualNoteX
+- **GitHub**: https://github.com/SplashCodeDex/VisualNoteX
 - **Tagline**: "Automation Engineer with a soul"
 
 ## 📝 License
