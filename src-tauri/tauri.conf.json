@@ -1,0 +1,53 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "visualNoteX",
+  "version": "1.0.0",
+  "identifier": "com.codedex.visualNoteX",
+  "copyright": "© 2025 CodeDeX. All rights reserved. Built with passion for automation engineering."
+  "build": {
+    "frontendDist": "../apps/web",
+    "devUrl": "http://localhost:7200",
+    "beforeDevCommand": "npm run start",
+    "beforeBuildCommand": "npm run build:web"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "visualNoteX - CodeDeX Drawing Application",
+        "width": 1200,
+        "height": 800,
+        "minWidth": 800,
+        "minHeight": 600,
+        "resizable": true,
+        "maximizable": true,
+        "minimizable": true,
+        "closable": true,
+        "fullscreen": false,
+        "center": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["msi"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": "http://timestamp.digicert.com"
+    },
+    "shortDescription": "Professional drawing and whiteboarding application by CodeDeX",
+    "longDescription": "visualNoteX is a powerful desktop drawing and whiteboarding application built by CodeDeX. Create stunning diagrams, mind maps, flowcharts, and more with our intuitive interface and advanced tools.",
+    "copyright": "© 2025 CodeDeX. All rights reserved."
+  },
+  "plugins": {}
+}

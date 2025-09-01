@@ -9,10 +9,13 @@ const OLD_DRAWNIX_LOCAL_DATA_KEY = 'drawnix-local-data';
 const MAIN_BOARD_CONTENT_KEY = 'main_board_content';
 
 localforage.config({
-  name: 'Drawnix',
-  storeName: 'drawnix_store',
+  name: 'CodeDeX VisualNoteX',
+  storeName: 'codedex_visualnotex_store',
   driver: [localforage.INDEXEDDB, localforage.LOCALSTORAGE],
 });
+
+// CodeDeX custom initialization info
+console.log('🎨 CodeDeX VisualNoteX - Loading user workspace...');
 
 export function App() {
   const [value, setValue] = useState<{
@@ -46,9 +49,23 @@ export function App() {
       value={value.children}
       viewport={value.viewport}
       theme={value.theme}
-      onChange={(value) => {
-        localforage.setItem(MAIN_BOARD_CONTENT_KEY, value);
-        setValue(value);
+      onChange={(changeData) => {
+        // CodeDeX custom change handling with error protection
+        try {
+          const updatedValue = typeof changeData === 'object' && 'children' in changeData
+            ? changeData
+            : { children: value.children, viewport: value.viewport, theme: value.theme };
+
+          localforage.setItem(MAIN_BOARD_CONTENT_KEY, updatedValue);
+          setValue(updatedValue);
+
+          // CodeDeX debug logging in development
+          if (import.meta.env.DEV && Math.random() < 0.01) {
+            console.log('🎨 Auto-saving workspace - CodeDeX VisualNoteX');
+          }
+        } catch (error) {
+          console.error('💥 CodeDeX error: Failed to save workspace changes', error);
+        }
       }}
       afterInit={(board) => {
         console.log('board initialized');
