@@ -3,10 +3,9 @@
 // Author: CodeDeX - "Automation Engineer with a soul"
 
 use std::fs;
-use std::path::Path;
 use tauri::{AppHandle, Manager};
 use serde::{Deserialize, Serialize};
-use chrono::{Utc, Duration};
+use chrono::Utc;
 
 #[derive(Serialize, Deserialize)]
 struct LicenseInfo {
@@ -45,21 +44,21 @@ async fn validate_license(app: AppHandle, license_key: String) -> Result<bool, S
         // CodeDeX custom license storage location
         let app_data_dir = app.path().app_data_dir().map_err(|e| {
             eprintln!("❌ Failed to get app data directory: {}", e);
-            e
+            e.to_string()
         })?;
         fs::create_dir_all(&app_data_dir).map_err(|e| {
             eprintln!("❌ Failed to create app data directory: {}", e);
-            e
+            e.to_string()
         })?;
 
         let license_path = app_data_dir.join("codedex_license.dat");
         let license_data = serde_json::to_string(&license).map_err(|e| {
             eprintln!("❌ Failed to serialize license: {}", e);
-            e
+            e.to_string()
         })?;
         fs::write(&license_path, license_data).map_err(|e| {
             eprintln!("❌ Failed to write license file to: {:?}", license_path);
-            e
+            e.to_string()
         })?;
         println!("💾 License saved successfully to: {:?}", license_path);
 
@@ -133,22 +132,22 @@ async fn start_trial(app: AppHandle) -> Result<LicenseInfo, String> {
 
     let app_data_dir = app.path().app_data_dir().map_err(|e| {
         eprintln!("❌ Failed to access app data directory");
-        e
+        e.to_string()
     })?;
     fs::create_dir_all(&app_data_dir).map_err(|e| {
         eprintln!("❌ Failed to create app data directory");
-        e
+        e.to_string()
     })?;
 
     // Use the CodeDeX preference for license storage
     let license_path = app_data_dir.join("codedex_license.dat");
     let license_data = serde_json::to_string(&trial_license).map_err(|e| {
         eprintln!("❌ Failed to create trial license data");
-        e
+        e.to_string()
     })?;
     fs::write(&license_path, license_data).map_err(|e| {
         eprintln!("❌ Failed to save trial license");
-        e
+        e.to_string()
     })?;
 
     println!("🎊 Trial activated successfully! License expires: {}", trial_license.expiry_date.as_ref().unwrap());

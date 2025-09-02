@@ -3,7 +3,6 @@
   "productName": "visualNoteX",
   "version": "1.0.0",
   "identifier": "com.codedex.visualNoteX",
-  "copyright": "© 2025 CodeDeX. All rights reserved. Built with passion for automation engineering."
   "build": {
     "frontendDist": "../apps/web",
     "devUrl": "http://localhost:7200",
@@ -32,7 +31,7 @@
   },
   "bundle": {
     "active": true,
-    "targets": ["msi"],
+    "targets": ["msi", "appx"],
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
@@ -47,7 +46,15 @@
     },
     "shortDescription": "Professional drawing and whiteboarding application by CodeDeX",
     "longDescription": "visualNoteX is a powerful desktop drawing and whiteboarding application built by CodeDeX. Create stunning diagrams, mind maps, flowcharts, and more with our intuitive interface and advanced tools.",
-    "copyright": "© 2025 CodeDeX. All rights reserved."
+    "copyright": "© 2025 CodeDeX. All rights reserved.",
+    "publisherDisplayName": "CodeDeX",
+    "category": "DeveloperTool",
+    "resources": {
+      "shortcuts": [{
+        "name": "visualNoteX",
+        "description": "Launch visualNoteX Drawing Application"
+      }]
+    }
   },
   "plugins": {}
 }
