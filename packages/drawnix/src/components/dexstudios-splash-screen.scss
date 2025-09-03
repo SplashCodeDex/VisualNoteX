@@ -1,0 +1,506 @@
+// =========================================
+// DeXStudios VisualPlanX Splash Screen Styles
+// =========================================
+// Professional animated loading screen with enterprise branding
+// Features: Glassmorphism, smooth animations, responsive design
+// =========================================
+
+.dexstudios-splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--dexstudios-primary) 0%, var(--dexstudios-secondary) 50%, var(--dexstudios-accent) 100%);
+  z-index: 9999;
+  font-family: var(--dexstudios-font-primary);
+  overflow: hidden;
+}
+
+// =========================================
+// ANIMATED BACKGROUND
+// =========================================
+
+.dexstudios-splash-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.dexstudios-bg-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+  animation: dexstudios-bg-float 20s ease-in-out infinite;
+}
+
+.dexstudios-bg-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg,
+    rgba(37, 99, 235, 0.1) 0%,
+    rgba(124, 58, 237, 0.1) 50%,
+    rgba(245, 158, 11, 0.1) 100%);
+  animation: dexstudios-bg-rotate 30s linear infinite;
+}
+
+.dexstudios-bg-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dexstudios-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  animation: dexstudios-particle-float 6s ease-in-out infinite;
+}
+
+// =========================================
+// BACKGROUND ANIMATIONS
+// =========================================
+
+@keyframes dexstudios-bg-float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+    opacity: 0.6;
+  }
+}
+
+@keyframes dexstudios-bg-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dexstudios-particle-float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-100px) scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+// =========================================
+// MAIN CONTENT
+// =========================================
+
+.dexstudios-splash-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 600px;
+  padding: var(--dexstudios-space-6);
+  animation: dexstudios-content-fade-in 1s ease-out;
+}
+
+@keyframes dexstudios-content-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// =========================================
+// LOGO ANIMATION
+// =========================================
+
+.dexstudios-logo-container {
+  margin-bottom: var(--dexstudios-space-8);
+  animation: dexstudios-logo-bounce 2s ease-out;
+}
+
+@keyframes dexstudios-logo-bounce {
+  0% {
+    transform: scale(0.8) rotate(-10deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.dexstudios-logo-svg {
+  width: 120px;
+  height: 120px;
+  margin-bottom: var(--dexstudios-space-4);
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3));
+}
+
+// Logo SVG Animations
+.dexstudios-logo-ring {
+  animation: dexstudios-ring-rotate 3s linear infinite;
+}
+
+.dexstudios-logo-v {
+  animation: dexstudios-v-draw 2s ease-out 0.5s both;
+}
+
+.dexstudios-logo-line {
+  animation: dexstudios-line-draw 1.5s ease-out 1s both;
+}
+
+.dexstudios-logo-center {
+  animation: dexstudios-center-pulse 2s ease-in-out infinite 1.5s;
+}
+
+.dexstudios-orbit-path {
+  animation: dexstudios-orbit-rotate 4s linear infinite;
+}
+
+.dexstudios-orbit-dot {
+  animation: dexstudios-orbit-pulse 1s ease-in-out infinite;
+}
+
+@keyframes dexstudios-ring-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes dexstudios-v-draw {
+  0% {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+  100% {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes dexstudios-line-draw {
+  0% {
+    stroke-dasharray: 50;
+    stroke-dashoffset: 50;
+    opacity: 0;
+  }
+  100% {
+    stroke-dasharray: 50;
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes dexstudios-center-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
+}
+
+@keyframes dexstudios-orbit-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes dexstudios-orbit-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+// =========================================
+// LOGO TEXT
+// =========================================
+
+.dexstudios-logo-text {
+  animation: dexstudios-text-slide-up 1.5s ease-out 1s both;
+}
+
+@keyframes dexstudios-text-slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dexstudios-main-title {
+  font-size: var(--dexstudios-font-size-4xl);
+  font-weight: var(--dexstudios-font-weight-bold);
+  color: white;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  letter-spacing: var(--dexstudios-letter-spacing-wide);
+}
+
+.dexstudios-subtitle {
+  font-size: var(--dexstudios-font-size-2xl);
+  font-weight: var(--dexstudios-font-weight-semibold);
+  color: rgba(255, 255, 255, 0.9);
+  margin: var(--dexstudios-space-1) 0 0 0;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.dexstudios-tagline {
+  font-size: var(--dexstudios-font-size-base);
+  font-weight: var(--dexstudios-font-weight-normal);
+  color: rgba(255, 255, 255, 0.8);
+  margin: var(--dexstudios-space-2) 0 0 0;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+// =========================================
+// LOADING INFORMATION
+// =========================================
+
+.dexstudios-loading-info {
+  margin-bottom: var(--dexstudios-space-6);
+  animation: dexstudios-loading-fade-in 1s ease-out 2s both;
+}
+
+@keyframes dexstudios-loading-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dexstudios-loading-step {
+  font-size: var(--dexstudios-font-size-lg);
+  font-weight: var(--dexstudios-font-weight-medium);
+  color: white;
+  margin-bottom: var(--dexstudios-space-4);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  animation: dexstudios-step-pulse 2s ease-in-out infinite;
+}
+
+@keyframes dexstudios-step-pulse {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 1; }
+}
+
+// =========================================
+// PROGRESS BAR
+// =========================================
+
+.dexstudios-progress-container {
+  display: flex;
+  align-items: center;
+  gap: var(--dexstudios-space-3);
+  margin-top: var(--dexstudios-space-4);
+}
+
+.dexstudios-progress-bar {
+  flex: 1;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--dexstudios-radius-full);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.dexstudios-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--dexstudios-primary), var(--dexstudios-secondary), var(--dexstudios-accent));
+  border-radius: var(--dexstudios-radius-full);
+  transition: width 0.3s ease-out;
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+}
+
+.dexstudios-progress-text {
+  font-size: var(--dexstudios-font-size-sm);
+  font-weight: var(--dexstudios-font-weight-semibold);
+  color: white;
+  min-width: 40px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+// =========================================
+// FEATURES HIGHLIGHT
+// =========================================
+
+.dexstudios-features {
+  display: flex;
+  gap: var(--dexstudios-space-6);
+  margin-bottom: var(--dexstudios-space-8);
+  animation: dexstudios-features-slide-up 1s ease-out 2.5s both;
+}
+
+@keyframes dexstudios-features-slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dexstudios-feature-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--dexstudios-space-2);
+  padding: var(--dexstudios-space-3);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: var(--dexstudios-radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.dexstudios-feature-icon {
+  font-size: var(--dexstudios-font-size-2xl);
+  animation: dexstudios-feature-bounce 2s ease-in-out infinite;
+}
+
+@keyframes dexstudios-feature-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.dexstudios-feature-item span {
+  font-size: var(--dexstudios-font-size-sm);
+  font-weight: var(--dexstudios-font-weight-medium);
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+// =========================================
+// FOOTER
+// =========================================
+
+.dexstudios-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--dexstudios-space-2);
+  animation: dexstudios-footer-fade-in 1s ease-out 3s both;
+}
+
+@keyframes dexstudios-footer-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.dexstudios-contact,
+.dexstudios-version {
+  font-size: var(--dexstudios-font-size-xs);
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+// =========================================
+// RESPONSIVE DESIGN
+// =========================================
+
+@media (max-width: 768px) {
+  .dexstudios-logo-svg {
+    width: 100px;
+    height: 100px;
+  }
+
+  .dexstudios-main-title {
+    font-size: var(--dexstudios-font-size-3xl);
+  }
+
+  .dexstudios-subtitle {
+    font-size: var(--dexstudios-font-size-xl);
+  }
+
+  .dexstudios-features {
+    flex-direction: column;
+    gap: var(--dexstudios-space-4);
+  }
+
+  .dexstudios-feature-item {
+    flex-direction: row;
+    padding: var(--dexstudios-space-2);
+  }
+
+  .dexstudios-feature-icon {
+    font-size: var(--dexstudios-font-size-xl);
+  }
+}
+
+// =========================================
+// ACCESSIBILITY
+// =========================================
+
+@media (prefers-reduced-motion: reduce) {
+  .dexstudios-splash-screen *,
+  .dexstudios-splash-screen *::before,
+  .dexstudios-splash-screen *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// =========================================
+// DARK MODE SUPPORT
+// =========================================
+
+@media (prefers-color-scheme: dark) {
+  .dexstudios-splash-screen {
+    background: linear-gradient(135deg, var(--dexstudios-neutral-800) 0%, var(--dexstudios-neutral-900) 100%);
+  }
+}
+
+// =========================================
+// END OF SPLASH SCREEN STYLES
+// =========================================

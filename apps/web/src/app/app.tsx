@@ -3,6 +3,7 @@ import { initializeData } from './initialize-data';
 import { Drawnix } from '@drawnix/drawnix';
 import { PlaitBoard, PlaitElement, PlaitTheme, Viewport } from '@plait/core';
 import localforage from 'localforage';
+import { DeXStudiosSplashScreen } from '@drawnix/dexstudios-splash-screen';
 
 // 1个月后移出删除兼容
 const OLD_DRAWNIX_LOCAL_DATA_KEY = 'drawnix-local-data';
@@ -45,6 +46,7 @@ export function App() {
   }>({ children: [] });
   const [licenseInfo, setLicenseInfo] = useState<LicenseInfo | null>(null);
   const [showLicenseDialog, setShowLicenseDialog] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
@@ -147,93 +149,112 @@ export function App() {
     }
   };
 
+  const handleSplashComplete = () => {
+    setShowSplash(false);
+    console.log('🎉 DeXStudios VisualPlanX - Ready to create!');
+  };
+
   return (
-    <div className="dexstudios-app">
-      {/* DeXStudios License Status Banner */}
-      {licenseInfo && (
-        <div className="dexstudios-license-banner">
-          {licenseInfo.activated ? (
-            <div className="dexstudios-license-active">
-              🎉 DeXStudios {licenseInfo.license_type.toUpperCase()} License Active
-              {licenseInfo.expiry_date && (
-                <span> - Expires: {licenseInfo.expiry_date}</span>
+    <>
+      {/* DeXStudios Splash Screen */}
+      {showSplash && (
+        <DeXStudiosSplashScreen
+          onComplete={handleSplashComplete}
+          duration={3500}
+          showProgress={true}
+        />
+      )}
+
+      {/* Main Application */}
+      {!showSplash && (
+        <div className="dexstudios-app">
+          {/* DeXStudios License Status Banner */}
+          {licenseInfo && (
+            <div className="dexstudios-license-banner">
+              {licenseInfo.activated ? (
+                <div className="dexstudios-license-active">
+                  🎉 DeXStudios {licenseInfo.license_type.toUpperCase()} License Active
+                  {licenseInfo.expiry_date && (
+                    <span> - Expires: {licenseInfo.expiry_date}</span>
+                  )}
+                </div>
+              ) : (
+                <div className="dexstudios-license-inactive">
+                  ⚠️ DeXStudios License Not Activated - Trial Required
+                </div>
               )}
             </div>
-          ) : (
-            <div className="dexstudios-license-inactive">
-              ⚠️ DeXStudios License Not Activated - Trial Required
+          )}
+
+          <Drawnix
+            value={value.children}
+            viewport={value.viewport}
+            theme={value.theme}
+            onChange={(changeData) => {
+              // DeXStudios custom change handling with error protection
+              try {
+                const updatedValue = typeof changeData === 'object' && 'children' in changeData
+                  ? changeData
+                  : { children: value.children, viewport: value.viewport, theme: value.theme };
+
+                localforage.setItem(MAIN_BOARD_CONTENT_KEY, updatedValue);
+                setValue(updatedValue);
+
+                // DeXStudios debug logging in development
+                if (import.meta.env.DEV && Math.random() < 0.01) {
+                  console.log('🚀 Auto-saving workspace - DeXStudios VisualPlanX');
+                }
+              } catch (error) {
+                console.error('💥 DeXStudios error: Failed to save workspace changes', error);
+              }
+            }}
+            afterInit={(board) => {
+              console.log('board initialized');
+              console.log(
+                `add __drawnix__web__debug_log to window, so you can call add log anywhere, like: window.__drawnix__web__console('some thing')`
+              );
+              (window as any)['__drawnix__web__console'] = (value: string) => {
+                addDebugLog(board, value);
+              };
+            }}
+          />
+
+          {/* DeXStudios License Activation Dialog */}
+          {showLicenseDialog && (
+            <div className="dexstudios-license-dialog-overlay">
+              <div className="dexstudios-license-dialog">
+                <h2>🚀 Welcome to DeXStudios VisualPlanX</h2>
+                <p>Your enterprise-grade diagramming and whiteboarding platform</p>
+
+                <div className="dexstudios-license-options">
+                  <div className="dexstudios-trial-section">
+                    <h3>🎯 Free 30-Day Enterprise Trial</h3>
+                    <p>Experience all professional features including:</p>
+                    <ul>
+                      <li>Advanced performance-optimized drawing tools</li>
+                      <li>Enterprise-grade diagramming capabilities</li>
+                      <li>Professional export and collaboration options</li>
+                      <li>Performance monitoring and analytics</li>
+                    </ul>
+                    <button
+                      className="dexstudios-trial-button"
+                      onClick={handleStartTrial}
+                    >
+                      Start Enterprise Trial
+                    </button>
+                  </div>
+
+                  <div className="dexstudios-license-section">
+                    <h3>💎 Have a License Key?</h3>
+                    <LicenseActivationForm onActivate={handleActivateLicense} />
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>
       )}
-
-      <Drawnix
-        value={value.children}
-        viewport={value.viewport}
-        theme={value.theme}
-        onChange={(changeData) => {
-          // DeXStudios custom change handling with error protection
-          try {
-            const updatedValue = typeof changeData === 'object' && 'children' in changeData
-              ? changeData
-              : { children: value.children, viewport: value.viewport, theme: value.theme };
-
-            localforage.setItem(MAIN_BOARD_CONTENT_KEY, updatedValue);
-            setValue(updatedValue);
-
-            // DeXStudios debug logging in development
-            if (import.meta.env.DEV && Math.random() < 0.01) {
-              console.log('🚀 Auto-saving workspace - DeXStudios VisualPlanX');
-            }
-          } catch (error) {
-            console.error('💥 DeXStudios error: Failed to save workspace changes', error);
-          }
-        }}
-        afterInit={(board) => {
-          console.log('board initialized');
-          console.log(
-            `add __drawnix__web__debug_log to window, so you can call add log anywhere, like: window.__drawnix__web__console('some thing')`
-          );
-          (window as any)['__drawnix__web__console'] = (value: string) => {
-            addDebugLog(board, value);
-          };
-        }}
-      />
-
-      {/* DeXStudios License Activation Dialog */}
-      {showLicenseDialog && (
-        <div className="dexstudios-license-dialog-overlay">
-          <div className="dexstudios-license-dialog">
-            <h2>🚀 Welcome to DeXStudios VisualPlanX</h2>
-            <p>Your enterprise-grade diagramming and whiteboarding platform</p>
-
-            <div className="dexstudios-license-options">
-              <div className="dexstudios-trial-section">
-                <h3>🎯 Free 30-Day Enterprise Trial</h3>
-                <p>Experience all professional features including:</p>
-                <ul>
-                  <li>Advanced performance-optimized drawing tools</li>
-                  <li>Enterprise-grade diagramming capabilities</li>
-                  <li>Professional export and collaboration options</li>
-                  <li>Performance monitoring and analytics</li>
-                </ul>
-                <button
-                  className="dexstudios-trial-button"
-                  onClick={handleStartTrial}
-                >
-                  Start Enterprise Trial
-                </button>
-              </div>
-
-              <div className="dexstudios-license-section">
-                <h3>💎 Have a License Key?</h3>
-                <LicenseActivationForm onActivate={handleActivateLicense} />
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+    </>
   );
 }
 

@@ -1,10 +1,11 @@
 @import './../../../../node_modules/@plait/draw/styles/styles.scss';
 @import './../../../../node_modules/@plait/mind/styles/styles.scss';
 @import './theme.scss';
+@import './dexstudios-branding.scss';
 
 .drawnix {
     height: 100%;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Noto Sans', 'Noto Sans CJK SC', 'Microsoft Yahei', 'Hiragino Sans GB', Arial, sans-serif;
+    font-family: var(--dexstudios-font-primary);
     .pencil-mode-toolbar {
         position: absolute;
         top: 82px;
@@ -43,7 +44,7 @@
             align-items: center;
             justify-content: center;
             color: var(--color-on-surface);
-            border-radius: var(--border-radius-sm);;
+            border-radius: var(--dexstudios-radius-base);
             cursor: pointer;
 
             &:hover, &.active {
@@ -87,12 +88,13 @@
             width: 100px;
             background-color: var(--color-surface-secondary-container);
             color: var(--color-on-surface);
-            border-radius: var(--border-radius-sm);
+            border-radius: var(--dexstudios-radius-base);
             padding: 4px 8px;
             cursor: pointer;
             border: none;
             outline: none;
             font-size: 14px;
+            font-family: var(--dexstudios-font-primary);
             &:hover {
                 background-color: var(--color-surface-primary-container);
             }
@@ -121,12 +123,16 @@
     }
     textarea {
         outline: none;
+        font-family: var(--dexstudios-font-primary);
         &:hover, &:focus {
-            border: 1px solid var(--color-primary);
+            border: 1px solid var(--dexstudios-primary);
+            border-radius: var(--dexstudios-radius-base);
         }
     }
     .drawnix-button {
         @include outlineButtonStyles;
+        border-radius: var(--dexstudios-radius-base);
+        font-family: var(--dexstudios-font-primary);
     }
 
     [plait-mindmap="true"] {
@@ -140,6 +146,6 @@
     &.pointer-eraser {
         .board-host-svg {
             cursor: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTAiIGN5PSIxMCIgcj0iNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNjY2IiBzdHJva2Utd2lkdGg9IjEuNSIvPgo8L3N2Zz4=') 10 10, crosshair !important;
-        }    
+        }
     }
 }
