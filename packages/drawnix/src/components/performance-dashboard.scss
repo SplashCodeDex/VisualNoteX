@@ -1,0 +1,690 @@
+/**
+ * Performance Dashboard Styles
+ * Professional, responsive design for performance monitoring interface
+ */
+
+.performance-dashboard {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 400px;
+  max-height: 80vh;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  &--compact {
+    width: 300px;
+    max-height: 60vh;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  &__action-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+
+  &__tabs {
+    display: flex;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  &__tab {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    background: transparent;
+    color: #666;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 2px solid transparent;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.05);
+      color: #333;
+    }
+
+    &--active {
+      color: #667eea;
+      border-bottom-color: #667eea;
+      background: rgba(102, 126, 234, 0.1);
+    }
+  }
+
+  &__content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+  }
+
+  &__loading {
+    text-align: center;
+    color: #666;
+    padding: 40px;
+    font-style: italic;
+  }
+}
+
+// Performance Overview Styles
+.performance-overview {
+  &__score {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  &__metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  &__recommendations {
+    background: rgba(102, 126, 234, 0.1);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    border-radius: 8px;
+    padding: 16px;
+
+    h4 {
+      margin: 0 0 12px 0;
+      color: #667eea;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+
+      li {
+        margin-bottom: 8px;
+        color: #555;
+        font-size: 13px;
+        line-height: 1.4;
+      }
+    }
+  }
+}
+
+// Performance Score Styles
+.performance-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__value {
+    font-size: 48px;
+    font-weight: 700;
+    color: #333;
+    line-height: 1;
+  }
+
+  &__label {
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+  }
+
+  &__indicator {
+    flex: 1;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  &__bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+
+    &--good {
+      background: linear-gradient(90deg, #4caf50, #66bb6a);
+    }
+
+    &--warning {
+      background: linear-gradient(90deg, #ff9800, #ffb74d);
+    }
+
+    &--poor {
+      background: linear-gradient(90deg, #f44336, #ef5350);
+    }
+  }
+}
+
+// Metric Card Styles
+.metric-card {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  &--good {
+    border-left: 4px solid #4caf50;
+  }
+
+  &--warning {
+    border-left: 4px solid #ff9800;
+  }
+
+  &--poor {
+    border-left: 4px solid #f44336;
+  }
+
+  &__title {
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  &__value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 4px;
+  }
+
+  &__unit {
+    font-size: 11px;
+    color: #999;
+    font-weight: 500;
+  }
+}
+
+// Performance Metrics Styles
+.performance-metrics {
+  &__category {
+    margin-bottom: 24px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__category-title {
+    margin: 0 0 16px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 8px;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  &__item {
+    background: white;
+    border-radius: 6px;
+    padding: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  &__name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+  }
+
+  &__value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 4px;
+  }
+
+  &__timestamp {
+    font-size: 11px;
+    color: #999;
+  }
+}
+
+// Performance Alerts Styles
+.performance-alerts {
+  &__empty {
+    text-align: center;
+    color: #666;
+    padding: 40px 20px;
+    font-style: italic;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__item {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid;
+
+    &--critical {
+      border-left-color: #f44336;
+      background: linear-gradient(135deg, rgba(244, 67, 54, 0.1), rgba(244, 67, 54, 0.05));
+    }
+
+    &--warning {
+      border-left-color: #ff9800;
+      background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 152, 0, 0.05));
+    }
+
+    &--info {
+      border-left-color: #2196f3;
+      background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(33, 150, 243, 0.05));
+    }
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  &__type {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  &__metric {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  &__time {
+    font-size: 11px;
+    color: #999;
+  }
+
+  &__message {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+
+  &__details {
+    font-size: 12px;
+    color: #666;
+    font-family: 'Monaco', 'Menlo', monospace;
+  }
+}
+
+// Performance Tests Styles
+.performance-tests {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  &__run-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    background: #667eea;
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover:not(:disabled) {
+      background: #5a6fd8;
+      transform: translateY(-1px);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+
+  &__results {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &__summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  &__stat {
+    text-align: center;
+  }
+
+  &__stat-label {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  &__stat-value {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+
+    &--success {
+      color: #4caf50;
+    }
+
+    &--error {
+      color: #f44336;
+    }
+  }
+
+  &__regressions {
+    background: rgba(244, 67, 54, 0.1);
+    border: 1px solid rgba(244, 67, 54, 0.2);
+    border-radius: 8px;
+    padding: 16px;
+
+    h5 {
+      margin: 0 0 12px 0;
+      color: #f44336;
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+
+  &__regression {
+    background: white;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 8px;
+    border-left: 3px solid #f44336;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__regression-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 4px;
+  }
+
+  &__regression-details {
+    font-size: 12px;
+    color: #666;
+  }
+
+  &__empty {
+    text-align: center;
+    color: #666;
+    padding: 40px 20px;
+    font-style: italic;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+  }
+}
+
+// Export Dialog Styles
+.export-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+}
+
+.export-dialog {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+
+  h4 {
+    margin: 0 0 12px 0;
+    color: #333;
+    font-size: 18px;
+  }
+
+  p {
+    margin: 0 0 20px 0;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+
+  &__btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &--cancel {
+      background: #f5f5f5;
+      color: #666;
+
+      &:hover {
+        background: #e0e0e0;
+      }
+    }
+
+    &--export {
+      background: #667eea;
+      color: white;
+
+      &:hover {
+        background: #5a6fd8;
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .performance-dashboard {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    max-height: none;
+    border-radius: 0;
+    z-index: 1000;
+
+    &--compact {
+      width: auto;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .performance-dashboard {
+    &__header {
+      padding: 12px 16px;
+    }
+
+    &__title {
+      font-size: 14px;
+    }
+
+    &__actions {
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    &__action-btn {
+      padding: 4px 8px;
+      font-size: 11px;
+    }
+
+    &__content {
+      padding: 16px;
+    }
+  }
+
+  .performance-overview {
+    &__score {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    &__metrics {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+  }
+
+  .performance-score {
+    &__value {
+      font-size: 36px;
+    }
+  }
+
+  .metric-card {
+    padding: 12px;
+
+    &__value {
+      font-size: 20px;
+    }
+  }
+}
+
+// Dark theme support
+@media (prefers-color-scheme: dark) {
+  .performance-dashboard {
+    background: rgba(30, 30, 30, 0.95);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: #e0e0e0;
+
+    &__header {
+      background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+    }
+
+    &__tab {
+      color: #a0aec0;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: #e2e8f0;
+      }
+
+      &--active {
+        color: #63b3ed;
+        border-bottom-color: #63b3ed;
+        background: rgba(99, 179, 237, 0.1);
+      }
+    }
+  }
+
+  .metric-card,
+  .performance-metrics__item,
+  .performance-alerts__item,
+  .performance-tests__results {
+    background: #2d3748;
+    color: #e0e0e0;
+  }
+
+  .export-dialog {
+    background: #2d3748;
+    color: #e0e0e0;
+  }
+}
