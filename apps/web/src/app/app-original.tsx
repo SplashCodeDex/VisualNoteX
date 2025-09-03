@@ -24,19 +24,6 @@ interface LicenseInfo {
 // CodeDeX custom initialization info
 console.log('🎨 CodeDeX VisualNoteX - Loading user workspace...');
 
-// Dynamic Tauri API loader to avoid static import analysis
-const loadTauriAPI = async () => {
-  try {
-    // Use dynamic string to avoid static analysis
-    const moduleName = '@tauri-apps/api/tauri';
-    const tauriModule = await import(/* @vite-ignore */ moduleName);
-    return tauriModule;
-  } catch (error) {
-    console.warn('⚠️ Tauri API not available:', error);
-    return null;
-  }
-};
-
 export function App() {
   const [value, setValue] = useState<{
     children: PlaitElement[];
@@ -68,17 +55,11 @@ export function App() {
       try {
         // Only try Tauri API if running in desktop environment
         if ((window as any).__TAURI__) {
-          const tauriModule = await loadTauriAPI();
-          if (tauriModule) {
-            const { invoke } = tauriModule;
-            const license = await (invoke as any)('get_license_info');
-            setLicenseInfo(license);
-            if (!license || !license.activated) {
-              console.log('🎁 CodeDeX License Check - No active license found, prompting trial');
-              setShowLicenseDialog(true);
-            }
-          } else {
-            console.warn('⚠️ Tauri module could not be loaded');
+          const { invoke } = await import('@tauri-apps/api/tauri');
+          const license = await (invoke as any)('get_license_info');
+          setLicenseInfo(license);
+          if (!license || !license.activated) {
+            console.log('🎁 CodeDeX License Check - No active license found, prompting trial');
             setShowLicenseDialog(true);
           }
         } else {
@@ -103,16 +84,11 @@ export function App() {
         return;
       }
       console.log('🎁 Starting CodeDeX Trial...');
-      const tauriModule = await loadTauriAPI();
-      if (tauriModule) {
-        const { invoke } = tauriModule;
-        const license = await (invoke as any)('start_trial');
-        setLicenseInfo(license);
-        setShowLicenseDialog(false);
-        console.log('✅ CodeDeX Trial activated successfully!');
-      } else {
-        alert('Tauri API not available. Please try again.');
-      }
+      const { invoke } = await import('@tauri-apps/api/tauri');
+      const license = await (invoke as any)('start_trial');
+      setLicenseInfo(license);
+      setShowLicenseDialog(false);
+      console.log('✅ CodeDeX Trial activated successfully!');
     } catch (error) {
       console.error('❌ Failed to start trial:', error);
       alert('Failed to start trial. Please try again.');
@@ -125,21 +101,16 @@ export function App() {
         alert('License activation is only available in the desktop application.');
         return;
       }
-      const tauriModule = await loadTauriAPI();
-      if (tauriModule) {
-        const { invoke } = tauriModule;
-        const isValid = await (invoke as any)('validate_license', { licenseKey });
-        if (isValid) {
-          const updatedLicense = await (invoke as any)('get_license_info');
-          setLicenseInfo(updatedLicense);
-          setShowLicenseDialog(false);
-          console.log('✅ CodeDeX License activated successfully!');
-          alert('License activated successfully! Professional features unlocked.');
-        } else {
-          alert('Invalid license key. Please check your key and try again.');
-        }
+      const { invoke } = await import('@tauri-apps/api/tauri');
+      const isValid = await (invoke as any)('validate_license', { licenseKey });
+      if (isValid) {
+        const updatedLicense = await (invoke as any)('get_license_info');
+        setLicenseInfo(updatedLicense);
+        setShowLicenseDialog(false);
+        console.log('✅ CodeDeX License activated successfully!');
+        alert('License activated successfully! Professional features unlocked.');
       } else {
-        alert('Tauri API not available. Please try again.');
+        alert('Invalid license key. Please check your key and try again.');
       }
     } catch (error) {
       console.error('❌ Failed to validate license:', error);
@@ -198,7 +169,7 @@ export function App() {
             addDebugLog(board, value);
           };
         }}
-      />
+      ></Drawnix>
 
       {/* CodeDeX License Activation Dialog */}
       {showLicenseDialog && (

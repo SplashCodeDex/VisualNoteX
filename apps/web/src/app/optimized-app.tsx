@@ -1,16 +1,20 @@
+/**
+ * Optimized App Component - Performance-enhanced version with Web Worker support
+ * Demonstrates the performance improvements of the optimized Drawnix component
+ */
+
 import { useState, useEffect } from 'react';
 import { initializeData } from './initialize-data';
-import { Drawnix } from '@drawnix/drawnix';
+import { OptimizedDrawnix } from '@drawnix/optimized-drawnix';
 import { PlaitBoard, PlaitElement, PlaitTheme, Viewport } from '@plait/core';
 import localforage from 'localforage';
 
-// 1个月后移出删除兼容
 const OLD_DRAWNIX_LOCAL_DATA_KEY = 'drawnix-local-data';
 const MAIN_BOARD_CONTENT_KEY = 'main_board_content';
 
 localforage.config({
-  name: 'CodeDeX VisualNoteX',
-  storeName: 'codedex_visualnotex_store',
+  name: 'CodeDeX VisualNoteX Optimized',
+  storeName: 'codedex_visualnotex_optimized_store',
   driver: [localforage.INDEXEDDB, localforage.LOCALSTORAGE],
 });
 
@@ -21,30 +25,25 @@ interface LicenseInfo {
   license_type: string;
 }
 
-// CodeDeX custom initialization info
-console.log('🎨 CodeDeX VisualNoteX - Loading user workspace...');
+interface PerformanceMetrics {
+  webWorkersSupported: boolean;
+  freehandOptimizationEnabled: boolean;
+  renderingPerformance: 'high' | 'medium' | 'low';
+  memoryUsage: number;
+}
 
-// Dynamic Tauri API loader to avoid static import analysis
-const loadTauriAPI = async () => {
-  try {
-    // Use dynamic string to avoid static analysis
-    const moduleName = '@tauri-apps/api/tauri';
-    const tauriModule = await import(/* @vite-ignore */ moduleName);
-    return tauriModule;
-  } catch (error) {
-    console.warn('⚠️ Tauri API not available:', error);
-    return null;
-  }
-};
+console.log('🚀 CodeDeX VisualNoteX Optimized - Loading with performance enhancements...');
 
-export function App() {
+export function OptimizedApp() {
   const [value, setValue] = useState<{
     children: PlaitElement[];
     viewport?: Viewport;
     theme?: PlaitTheme;
   }>({ children: [] });
+
   const [licenseInfo, setLicenseInfo] = useState<LicenseInfo | null>(null);
   const [showLicenseDialog, setShowLicenseDialog] = useState(false);
+  const [performanceMetrics, setPerformanceMetrics] = useState<PerformanceMetrics | null>(null);
 
   useEffect(() => {
     const loadData = async () => {
@@ -66,23 +65,15 @@ export function App() {
 
     const checkLicense = async () => {
       try {
-        // Only try Tauri API if running in desktop environment
         if ((window as any).__TAURI__) {
-          const tauriModule = await loadTauriAPI();
-          if (tauriModule) {
-            const { invoke } = tauriModule;
-            const license = await (invoke as any)('get_license_info');
-            setLicenseInfo(license);
-            if (!license || !license.activated) {
-              console.log('🎁 CodeDeX License Check - No active license found, prompting trial');
-              setShowLicenseDialog(true);
-            }
-          } else {
-            console.warn('⚠️ Tauri module could not be loaded');
+          const { invoke } = await import('@tauri-apps/api/tauri');
+          const license = await (invoke as any)('get_license_info');
+          setLicenseInfo(license);
+          if (!license || !license.activated) {
+            console.log('🎁 CodeDeX License Check - No active license found, prompting trial');
             setShowLicenseDialog(true);
           }
         } else {
-          // Web fallback - show trial dialog
           console.log('🎨 Running in web mode - showing license dialog');
           setShowLicenseDialog(true);
         }
@@ -92,8 +83,31 @@ export function App() {
       }
     };
 
+    const initializePerformanceMetrics = () => {
+      const metrics: PerformanceMetrics = {
+        webWorkersSupported: typeof Worker !== 'undefined',
+        freehandOptimizationEnabled: true,
+        renderingPerformance: 'high',
+        memoryUsage: 0,
+      };
+
+      // Detect device capabilities
+      if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
+        metrics.renderingPerformance = 'medium';
+      }
+
+      if ((navigator as any).deviceMemory && (navigator as any).deviceMemory < 4) {
+        metrics.renderingPerformance = 'low';
+      }
+
+      setPerformanceMetrics(metrics);
+
+      console.log('📊 Performance Metrics:', metrics);
+    };
+
     loadData();
     checkLicense();
+    initializePerformanceMetrics();
   }, []);
 
   const handleStartTrial = async () => {
@@ -103,16 +117,11 @@ export function App() {
         return;
       }
       console.log('🎁 Starting CodeDeX Trial...');
-      const tauriModule = await loadTauriAPI();
-      if (tauriModule) {
-        const { invoke } = tauriModule;
-        const license = await (invoke as any)('start_trial');
-        setLicenseInfo(license);
-        setShowLicenseDialog(false);
-        console.log('✅ CodeDeX Trial activated successfully!');
-      } else {
-        alert('Tauri API not available. Please try again.');
-      }
+      const { invoke } = await import('@tauri-apps/api/tauri');
+      const license = await (invoke as any)('start_trial');
+      setLicenseInfo(license);
+      setShowLicenseDialog(false);
+      console.log('✅ CodeDeX Trial activated successfully!');
     } catch (error) {
       console.error('❌ Failed to start trial:', error);
       alert('Failed to start trial. Please try again.');
@@ -125,21 +134,16 @@ export function App() {
         alert('License activation is only available in the desktop application.');
         return;
       }
-      const tauriModule = await loadTauriAPI();
-      if (tauriModule) {
-        const { invoke } = tauriModule;
-        const isValid = await (invoke as any)('validate_license', { licenseKey });
-        if (isValid) {
-          const updatedLicense = await (invoke as any)('get_license_info');
-          setLicenseInfo(updatedLicense);
-          setShowLicenseDialog(false);
-          console.log('✅ CodeDeX License activated successfully!');
-          alert('License activated successfully! Professional features unlocked.');
-        } else {
-          alert('Invalid license key. Please check your key and try again.');
-        }
+      const { invoke } = await import('@tauri-apps/api/tauri');
+      const isValid = await (invoke as any)('validate_license', { licenseKey });
+      if (isValid) {
+        const updatedLicense = await (invoke as any)('get_license_info');
+        setLicenseInfo(updatedLicense);
+        setShowLicenseDialog(false);
+        console.log('✅ CodeDeX License activated successfully!');
+        alert('License activated successfully! Professional features unlocked.');
       } else {
-        alert('Tauri API not available. Please try again.');
+        alert('Invalid license key. Please check your key and try again.');
       }
     } catch (error) {
       console.error('❌ Failed to validate license:', error);
@@ -149,6 +153,17 @@ export function App() {
 
   return (
     <div className="codedex-app">
+      {/* Performance Metrics Banner */}
+      {performanceMetrics && (
+        <div className="performance-banner">
+          <div className="performance-indicator">
+            ⚡ Performance Mode: {performanceMetrics.renderingPerformance.toUpperCase()}
+            {performanceMetrics.webWorkersSupported && ' | Web Workers: ✅'}
+            {!performanceMetrics.webWorkersSupported && ' | Web Workers: ❌'}
+          </div>
+        </div>
+      )}
+
       {/* CodeDeX License Status Banner */}
       {licenseInfo && (
         <div className="codedex-license-banner">
@@ -167,12 +182,14 @@ export function App() {
         </div>
       )}
 
-      <Drawnix
+      <OptimizedDrawnix
         value={value.children}
         viewport={value.viewport}
         theme={value.theme}
+        enablePerformanceOptimizations={true}
+        webWorkerSmoothing={performanceMetrics?.webWorkersSupported ?? false}
+        adaptiveRendering={true}
         onChange={(changeData) => {
-          // CodeDeX custom change handling with error protection
           try {
             const updatedValue = typeof changeData === 'object' && 'children' in changeData
               ? changeData
@@ -181,21 +198,20 @@ export function App() {
             localforage.setItem(MAIN_BOARD_CONTENT_KEY, updatedValue);
             setValue(updatedValue);
 
-            // CodeDeX debug logging in development
             if (import.meta.env.DEV && Math.random() < 0.01) {
-              console.log('🎨 Auto-saving workspace - CodeDeX VisualNoteX');
+              console.log('🎨 Auto-saving optimized workspace - CodeDeX VisualNoteX');
             }
           } catch (error) {
             console.error('💥 CodeDeX error: Failed to save workspace changes', error);
           }
         }}
         afterInit={(board) => {
-          console.log('board initialized');
+          console.log('🚀 Optimized board initialized with performance enhancements');
           console.log(
-            `add __drawnix__web__debug_log to window, so you can call add log anywhere, like: window.__drawnix__web__console('some thing')`
+            `add __drawnix__optimized__debug_log to window for performance monitoring`
           );
-          (window as any)['__drawnix__web__console'] = (value: string) => {
-            addDebugLog(board, value);
+          (window as any)['__drawnix__optimized__console'] = (value: string) => {
+            addOptimizedDebugLog(board, value);
           };
         }}
       />
@@ -204,8 +220,18 @@ export function App() {
       {showLicenseDialog && (
         <div className="codedex-license-dialog-overlay">
           <div className="codedex-license-dialog">
-            <h2>🎨 Welcome to CodeDeX VisualNoteX</h2>
-            <p>Your professional drawing and whiteboarding application</p>
+            <h2>🎨 Welcome to CodeDeX VisualNoteX Optimized</h2>
+            <p>Your professional drawing and whiteboarding application with performance enhancements</p>
+
+            <div className="performance-features">
+              <h3>⚡ Performance Features Enabled:</h3>
+              <ul>
+                <li>Web Worker-based smoothing for large strokes</li>
+                <li>Adaptive rendering based on device capabilities</li>
+                <li>Optimized memory management</li>
+                <li>Progressive loading for complex diagrams</li>
+              </ul>
+            </div>
 
             <div className="codedex-license-options">
               <div className="codedex-trial-section">
@@ -216,6 +242,7 @@ export function App() {
                   <li>Unlimited diagrams</li>
                   <li>Professional export options</li>
                   <li>Cloud sync capabilities</li>
+                  <li><strong>Performance optimizations</strong></li>
                 </ul>
                 <button
                   className="codedex-trial-button"
@@ -237,22 +264,40 @@ export function App() {
   );
 }
 
-const addDebugLog = (board: PlaitBoard, value: string) => {
+const addOptimizedDebugLog = (board: PlaitBoard, value: string) => {
   const container = PlaitBoard.getBoardContainer(board).closest(
     '.drawnix'
   ) as HTMLElement;
-  let consoleContainer = container.querySelector('.drawnix-console');
+  let consoleContainer = container.querySelector('.drawnix-optimized-console');
   if (!consoleContainer) {
     consoleContainer = document.createElement('div');
-    consoleContainer.classList.add('drawnix-console');
+    consoleContainer.classList.add('drawnix-optimized-console');
+    consoleContainer.style.cssText = `
+      position: fixed;
+      top: 60px;
+      right: 10px;
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      max-width: 300px;
+      z-index: 10000;
+    `;
     container.append(consoleContainer);
   }
   const div = document.createElement('div');
-  div.innerHTML = value;
+  div.innerHTML = `[${new Date().toLocaleTimeString()}] ${value}`;
   consoleContainer.append(div);
+
+  // Auto-scroll and limit entries
+  if (consoleContainer.children.length > 10) {
+    consoleContainer.removeChild(consoleContainer.children[0]);
+  }
+  consoleContainer.scrollTop = consoleContainer.scrollHeight;
 };
 
-// CodeDeX License Activation Form Component
+// License Activation Form Component (same as original)
 interface LicenseActivationFormProps {
   onActivate: (licenseKey: string) => Promise<void>;
 }
@@ -302,4 +347,4 @@ const LicenseActivationForm: React.FC<LicenseActivationFormProps> = ({ onActivat
   );
 };
 
-export default App;
+export default OptimizedApp;
