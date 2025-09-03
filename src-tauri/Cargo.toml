@@ -1,16 +1,16 @@
 [package]
-name = "visualnotex-core"
+name = "visualplanx-core"
 version = "1.0.0"
-description = "CodeDeX VisualNoteX - Professional Drawing Desktop Application"
-authors = ["CodeDeX <code@codeDeX.dev>"]
+description = "DeXStudios VisualPlanX - Enterprise-Grade Diagramming Desktop Platform"
+authors = ["DeXStudios <splashdexstudios@gmail.com>"]
 license = "Proprietary"
-repository = "https://github.com/codeDeX/visualNoteX"
+repository = "https://github.com/SplashCodeX/visualplanx"
 edition = "2021"
 rust-version = "1.77.2"
 
-# CodeDeX Custom Flags
-keywords = ["drawing", "whiteboarding", "diagrams", "codedex"]
-categories = ["productivity", "graphics", "utilities"]
+# DeXStudios Custom Flags
+keywords = ["diagramming", "whiteboarding", "enterprise", "performance", "dexstudios"]
+categories = ["productivity", "graphics", "utilities", "development-tools"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

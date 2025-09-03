@@ -1,8 +1,8 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "visualNoteX",
+  "productName": "VisualPlanX",
   "version": "1.0.0",
-  "identifier": "com.codedex.visualNoteX",
+  "identifier": "com.dexstudios.visualplanx",
   "build": {
     "frontendDist": "../apps/web",
     "devUrl": "http://localhost:7200",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "visualNoteX - CodeDeX Drawing Application",
+        "title": "VisualPlanX - DeXStudios Enterprise Diagramming Platform",
         "width": 1200,
         "height": 800,
         "minWidth": 800,
@@ -44,15 +44,15 @@
       "digestAlgorithm": "sha256",
       "timestampUrl": "http://timestamp.digicert.com"
     },
-    "shortDescription": "Professional drawing and whiteboarding application by CodeDeX",
-    "longDescription": "visualNoteX is a powerful desktop drawing and whiteboarding application built by CodeDeX. Create stunning diagrams, mind maps, flowcharts, and more with our intuitive interface and advanced tools.",
-    "copyright": "© 2025 CodeDeX. All rights reserved.",
-    "publisherDisplayName": "CodeDeX",
+    "shortDescription": "Enterprise-grade diagramming and whiteboarding platform by DeXStudios",
+    "longDescription": "VisualPlanX is a powerful enterprise-grade diagramming and whiteboarding platform built by DeXStudios. Create stunning diagrams, mind maps, flowcharts, and more with our performance-optimized interface and advanced collaboration tools.",
+    "copyright": "© 2025 DeXStudios. All rights reserved.",
+    "publisherDisplayName": "DeXStudios",
     "category": "DeveloperTool",
     "resources": {
       "shortcuts": [{
-        "name": "visualNoteX",
-        "description": "Launch visualNoteX Drawing Application"
+        "name": "VisualPlanX",
+        "description": "Launch VisualPlanX Enterprise Diagramming Platform"
       }]
     }
   },

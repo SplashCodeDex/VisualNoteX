@@ -1,9 +1,31 @@
 {
-  "name": "visualnotex",
+  "name": "visualplanx",
   "version": "1.0.0",
   "license": "Proprietary",
-  "author": "CodeDeX",
-  "description": "CodeDeX VisualNoteX - Professional drawing and whiteboarding application",
+  "author": "DeXStudios <splashdexstudios@gmail.com>",
+  "description": "DeXStudios VisualPlanX - Professional drawing and whiteboarding application with enterprise-grade performance optimizations",
+  "homepage": "https://github.com/SplashCodeX/visualplanx",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SplashCodeX/visualplanx.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SplashCodeX/visualplanx/issues",
+    "email": "splashdexstudios@gmail.com"
+  },
+  "keywords": [
+    "whiteboard",
+    "drawing",
+    "diagramming",
+    "mind-mapping",
+    "flowchart",
+    "visual-planning",
+    "performance-optimized",
+    "enterprise-grade",
+    "react",
+    "typescript",
+    "tauri"
+  ],
   "scripts": {
     "start": "nx serve web --host=0.0.0.0",
     "build": "nx run-many -t=build",

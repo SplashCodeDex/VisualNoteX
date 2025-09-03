@@ -9,8 +9,8 @@ const OLD_DRAWNIX_LOCAL_DATA_KEY = 'drawnix-local-data';
 const MAIN_BOARD_CONTENT_KEY = 'main_board_content';
 
 localforage.config({
-  name: 'CodeDeX VisualNoteX',
-  storeName: 'codedex_visualnotex_store',
+  name: 'DeXStudios VisualPlanX',
+  storeName: 'dexstudios_visualplanx_store',
   driver: [localforage.INDEXEDDB, localforage.LOCALSTORAGE],
 });
 
@@ -21,8 +21,8 @@ interface LicenseInfo {
   license_type: string;
 }
 
-// CodeDeX custom initialization info
-console.log('🎨 CodeDeX VisualNoteX - Loading user workspace...');
+// DeXStudios custom initialization info
+console.log('🚀 DeXStudios VisualPlanX - Loading user workspace...');
 
 // Dynamic Tauri API loader to avoid static import analysis
 const loadTauriAPI = async () => {
@@ -74,7 +74,7 @@ export function App() {
             const license = await (invoke as any)('get_license_info');
             setLicenseInfo(license);
             if (!license || !license.activated) {
-              console.log('🎁 CodeDeX License Check - No active license found, prompting trial');
+              console.log('🎁 DeXStudios License Check - No active license found, prompting trial');
               setShowLicenseDialog(true);
             }
           } else {
@@ -102,14 +102,14 @@ export function App() {
         alert('Trial licenses are only available in the desktop application.');
         return;
       }
-      console.log('🎁 Starting CodeDeX Trial...');
+      console.log('🎁 Starting DeXStudios Trial...');
       const tauriModule = await loadTauriAPI();
       if (tauriModule) {
         const { invoke } = tauriModule;
         const license = await (invoke as any)('start_trial');
         setLicenseInfo(license);
         setShowLicenseDialog(false);
-        console.log('✅ CodeDeX Trial activated successfully!');
+        console.log('✅ DeXStudios Trial activated successfully!');
       } else {
         alert('Tauri API not available. Please try again.');
       }
@@ -133,7 +133,7 @@ export function App() {
           const updatedLicense = await (invoke as any)('get_license_info');
           setLicenseInfo(updatedLicense);
           setShowLicenseDialog(false);
-          console.log('✅ CodeDeX License activated successfully!');
+          console.log('✅ DeXStudios License activated successfully!');
           alert('License activated successfully! Professional features unlocked.');
         } else {
           alert('Invalid license key. Please check your key and try again.');
@@ -148,20 +148,20 @@ export function App() {
   };
 
   return (
-    <div className="codedex-app">
-      {/* CodeDeX License Status Banner */}
+    <div className="dexstudios-app">
+      {/* DeXStudios License Status Banner */}
       {licenseInfo && (
-        <div className="codedex-license-banner">
+        <div className="dexstudios-license-banner">
           {licenseInfo.activated ? (
-            <div className="codedex-license-active">
-              🎉 CodeDeX {licenseInfo.license_type.toUpperCase()} License Active
+            <div className="dexstudios-license-active">
+              🎉 DeXStudios {licenseInfo.license_type.toUpperCase()} License Active
               {licenseInfo.expiry_date && (
                 <span> - Expires: {licenseInfo.expiry_date}</span>
               )}
             </div>
           ) : (
-            <div className="codedex-license-inactive">
-              ⚠️ CodeDeX License Not Activated - Trial Required
+            <div className="dexstudios-license-inactive">
+              ⚠️ DeXStudios License Not Activated - Trial Required
             </div>
           )}
         </div>
@@ -172,7 +172,7 @@ export function App() {
         viewport={value.viewport}
         theme={value.theme}
         onChange={(changeData) => {
-          // CodeDeX custom change handling with error protection
+          // DeXStudios custom change handling with error protection
           try {
             const updatedValue = typeof changeData === 'object' && 'children' in changeData
               ? changeData
@@ -181,12 +181,12 @@ export function App() {
             localforage.setItem(MAIN_BOARD_CONTENT_KEY, updatedValue);
             setValue(updatedValue);
 
-            // CodeDeX debug logging in development
+            // DeXStudios debug logging in development
             if (import.meta.env.DEV && Math.random() < 0.01) {
-              console.log('🎨 Auto-saving workspace - CodeDeX VisualNoteX');
+              console.log('🚀 Auto-saving workspace - DeXStudios VisualPlanX');
             }
           } catch (error) {
-            console.error('💥 CodeDeX error: Failed to save workspace changes', error);
+            console.error('💥 DeXStudios error: Failed to save workspace changes', error);
           }
         }}
         afterInit={(board) => {
@@ -200,32 +200,32 @@ export function App() {
         }}
       />
 
-      {/* CodeDeX License Activation Dialog */}
+      {/* DeXStudios License Activation Dialog */}
       {showLicenseDialog && (
-        <div className="codedex-license-dialog-overlay">
-          <div className="codedex-license-dialog">
-            <h2>🎨 Welcome to CodeDeX VisualNoteX</h2>
-            <p>Your professional drawing and whiteboarding application</p>
+        <div className="dexstudios-license-dialog-overlay">
+          <div className="dexstudios-license-dialog">
+            <h2>🚀 Welcome to DeXStudios VisualPlanX</h2>
+            <p>Your enterprise-grade diagramming and whiteboarding platform</p>
 
-            <div className="codedex-license-options">
-              <div className="codedex-trial-section">
-                <h3>🚀 Free 30-Day Professional Trial</h3>
-                <p>Experience all features including:</p>
+            <div className="dexstudios-license-options">
+              <div className="dexstudios-trial-section">
+                <h3>🎯 Free 30-Day Enterprise Trial</h3>
+                <p>Experience all professional features including:</p>
                 <ul>
-                  <li>Advanced drawing tools</li>
-                  <li>Unlimited diagrams</li>
-                  <li>Professional export options</li>
-                  <li>Cloud sync capabilities</li>
+                  <li>Advanced performance-optimized drawing tools</li>
+                  <li>Enterprise-grade diagramming capabilities</li>
+                  <li>Professional export and collaboration options</li>
+                  <li>Performance monitoring and analytics</li>
                 </ul>
                 <button
-                  className="codedex-trial-button"
+                  className="dexstudios-trial-button"
                   onClick={handleStartTrial}
                 >
-                  Start Free Trial
+                  Start Enterprise Trial
                 </button>
               </div>
 
-              <div className="codedex-license-section">
+              <div className="dexstudios-license-section">
                 <h3>💎 Have a License Key?</h3>
                 <LicenseActivationForm onActivate={handleActivateLicense} />
               </div>
@@ -252,7 +252,7 @@ const addDebugLog = (board: PlaitBoard, value: string) => {
   consoleContainer.append(div);
 };
 
-// CodeDeX License Activation Form Component
+// DeXStudios License Activation Form Component
 interface LicenseActivationFormProps {
   onActivate: (licenseKey: string) => Promise<void>;
 }
@@ -274,29 +274,30 @@ const LicenseActivationForm: React.FC<LicenseActivationFormProps> = ({ onActivat
   };
 
   return (
-    <form onSubmit={handleSubmit} className="codedex-license-form">
-      <div className="codedex-license-input-group">
+    <form onSubmit={handleSubmit} className="dexstudios-license-form">
+      <div className="dexstudios-license-input-group">
         <label htmlFor="licenseKey">License Key:</label>
         <input
           id="licenseKey"
           type="text"
           value={licenseKey}
           onChange={(e) => setLicenseKey(e.target.value)}
-          placeholder="Enter your CodeDeX license key"
+          placeholder="Enter your DeXStudios license key"
           disabled={isActivating}
           required
         />
       </div>
       <button
         type="submit"
-        className="codedex-activate-button"
+        className="dexstudios-activate-button"
         disabled={isActivating || !licenseKey.trim()}
       >
-        {isActivating ? '🔄 Activating...' : '💎 Activate License'}
+        {isActivating ? '🔄 Activating...' : '💎 Activate Enterprise License'}
       </button>
-      <div className="codedex-license-help">
-        <small>• Find your license key in your CodeDeX customer portal</small>
-        <small>• Keys contain "CODEDEX" and are at least 20 characters long</small>
+      <div className="dexstudios-license-help">
+        <small>• Find your license key in your DeXStudios customer portal</small>
+        <small>• Keys contain "DEXSTUDIOS" and are at least 20 characters long</small>
+        <small>• Contact: splashdexstudios@gmail.com | +233533365712</small>
       </div>
     </form>
   );
