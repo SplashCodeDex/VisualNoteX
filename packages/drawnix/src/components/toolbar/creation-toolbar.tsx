@@ -1,3 +1,4 @@
+import React from 'react';
 import classNames from 'classnames';
 import { Island } from '../island';
 import Stack from '../stack';
@@ -173,7 +174,7 @@ export const CreationToolbar = () => {
       <Stack.Row gap={1}>
         {BUTTONS.map((button, index) => {
           if (appState.isMobile && button.pointer === PlaitPointerType.hand) {
-            return <></>;
+            return <React.Fragment key={index}></React.Fragment>;
           }
           if (button.key === PopupKey.freehand) {
             return (
