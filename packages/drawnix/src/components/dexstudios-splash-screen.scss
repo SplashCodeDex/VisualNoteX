@@ -62,10 +62,12 @@
   backdrop-filter: blur(40px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow:
-    0 8px 32px rgba(59, 130, 246, 0.1),
-    0 16px 64px rgba(139, 92, 246, 0.08),
+    0 0 60px rgba(59, 130, 246, 0.3),
+    0 0 120px rgba(139, 92, 246, 0.2),
+    0 0 180px rgba(16, 185, 129, 0.15),
+    0 0 240px rgba(245, 158, 11, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
-  animation: dexstudios-bg-rotate 40s linear infinite;
+  animation: dexstudios-bg-rotate 40s linear infinite, dexstudios-glow-pulse 4s ease-in-out infinite;
 }
 
 .dexstudios-bg-particles {
@@ -106,6 +108,25 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes dexstudios-glow-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 60px rgba(59, 130, 246, 0.3),
+      0 0 120px rgba(139, 92, 246, 0.2),
+      0 0 180px rgba(16, 185, 129, 0.15),
+      0 0 240px rgba(245, 158, 11, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow:
+      0 0 80px rgba(59, 130, 246, 0.4),
+      0 0 160px rgba(139, 92, 246, 0.3),
+      0 0 240px rgba(16, 185, 129, 0.2),
+      0 0 320px rgba(245, 158, 11, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
 }
 

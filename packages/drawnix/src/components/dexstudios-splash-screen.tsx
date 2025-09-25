@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './dexstudios-splash-screen.scss';
 
 interface DeXStudiosSplashScreenProps {
+  progress?: number;
+  loadingStep?: string;
   onComplete: () => void;
   duration?: number;
   showProgress?: boolean;
@@ -10,9 +12,11 @@ interface DeXStudiosSplashScreenProps {
 export const DeXStudiosSplashScreen: React.FC<DeXStudiosSplashScreenProps> = ({
   onComplete,
   duration = 3000,
-  showProgress = true
+  showProgress = true,
+  progress: externalProgress = 0,
+  loadingStep: externalLoadingStep = 'Initializing DeXStudios VisualPlanX...'
 }) => {
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(externalProgress);
   const [currentStep, setCurrentStep] = useState(0);
 
   const loadingSteps = [
@@ -24,29 +28,17 @@ export const DeXStudiosSplashScreen: React.FC<DeXStudiosSplashScreenProps> = ({
   ];
 
   useEffect(() => {
-    const startTime = Date.now();
-    const stepDuration = duration / loadingSteps.length;
+    setProgress(externalProgress);
+  }, [externalProgress]);
 
-    const updateProgress = () => {
-      const elapsed = Date.now() - startTime;
-      const newProgress = Math.min((elapsed / duration) * 100, 100);
-      const newStep = Math.floor((elapsed / stepDuration));
-
-      setProgress(newProgress);
-      setCurrentStep(Math.min(newStep, loadingSteps.length - 1));
-
-      if (newProgress < 100) {
-        requestAnimationFrame(updateProgress);
-      } else {
-        // Add a small delay before completing
-        setTimeout(() => {
-          onComplete();
-        }, 500);
-      }
-    };
-
-    requestAnimationFrame(updateProgress);
-  }, [duration, onComplete]);
+  useEffect(() => {
+    if (progress >= 100) {
+      // Add a small delay before completing
+      setTimeout(() => {
+        onComplete();
+      }, 500);
+    }
+  }, [progress, onComplete]);
 
   return (
     <div className="dexstudios-splash-screen">
@@ -200,7 +192,7 @@ export const DeXStudiosSplashScreen: React.FC<DeXStudiosSplashScreenProps> = ({
         {/* Loading Information */}
         <div className="dexstudios-loading-info">
           <div className="dexstudios-loading-step">
-            {loadingSteps[currentStep]}
+            {externalLoadingStep || loadingSteps[currentStep]}
           </div>
 
           {showProgress && (
